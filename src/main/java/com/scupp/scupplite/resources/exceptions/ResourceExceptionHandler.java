@@ -39,7 +39,7 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(UserNumberOfCategoriesException.class)
-    protected ResponseEntity<StandardError> notFound (UserNumberOfCategoriesException e, HttpServletRequest request){
+    protected ResponseEntity<StandardError> numberOfCategoriesError (UserNumberOfCategoriesException e, HttpServletRequest request){
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
