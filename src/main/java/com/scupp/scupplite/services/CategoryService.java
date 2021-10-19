@@ -1,6 +1,6 @@
 package com.scupp.scupplite.services;
 
-import com.scupp.scupplite.dto.CategoryDTO;
+import com.scupp.scupplite.dto.category.CategoryDTO;
 import com.scupp.scupplite.entities.Category;
 import com.scupp.scupplite.repositories.CategoryRepository;
 import com.scupp.scupplite.services.exceptions.DatabaseException;

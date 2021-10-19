@@ -1,7 +1,7 @@
 package com.scupp.scupplite.resources;
 
 
-import com.scupp.scupplite.dto.CategoryDTO;
+import com.scupp.scupplite.dto.category.CategoryDTO;
 import com.scupp.scupplite.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

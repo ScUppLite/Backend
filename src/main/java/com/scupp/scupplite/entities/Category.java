@@ -4,6 +4,8 @@ import java.lang.String;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -14,18 +16,25 @@ public class Category {
     private Long id;
     private String name;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant created_At;
+    private Instant createdAt;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant updated_At;
+    private Instant updatedAt;
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<User> users = new HashSet<>();
 
     public Category() {
     }
 
-    public Category(Long id, String name, Instant created_At, Instant updated_At) {
+    public Category(Long id, String name, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
-        this.created_At = created_At;
-        this.updated_At = updated_At;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Set<User> getUsers() {
+        return users;
     }
 
     public Long getId() {
@@ -45,20 +54,20 @@ public class Category {
     }
 
     public Instant getCreated_At() {
-        return created_At;
+        return createdAt;
     }
 
     public Instant getUpdated_At() {
-        return updated_At;
+        return updatedAt;
     }
 
     @PrePersist
     public void prePersist() {
-        created_At = Instant.now();
+        createdAt = Instant.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        updated_At = Instant.now();
+        updatedAt = Instant.now();
     }
 }

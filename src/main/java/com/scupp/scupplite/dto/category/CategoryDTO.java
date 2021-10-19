@@ -1,4 +1,4 @@
-package com.scupp.scupplite.dto;
+package com.scupp.scupplite.dto.category;
 
 import com.scupp.scupplite.entities.Category;
 
