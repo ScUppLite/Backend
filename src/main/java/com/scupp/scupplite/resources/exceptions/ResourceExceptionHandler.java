@@ -2,6 +2,7 @@ package com.scupp.scupplite.resources.exceptions;
 
 import com.scupp.scupplite.services.exceptions.DatabaseException;
 import com.scupp.scupplite.services.exceptions.ResourceNotFoundException;
+import com.scupp.scupplite.services.exceptions.UserNumberOfCategoriesException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,6 +33,18 @@ public class ResourceExceptionHandler {
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
         error.setError("Database Exception");
+        error.setMessage(e.getMessage());
+        error.setPath(request.getRequestURI());
+        return  ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(UserNumberOfCategoriesException.class)
+    protected ResponseEntity<StandardError> notFound (UserNumberOfCategoriesException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError error = new StandardError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Number of categories error");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
         return  ResponseEntity.status(status).body(error);

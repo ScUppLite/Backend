@@ -2,12 +2,12 @@ package com.scupp.scupplite.services;
 
 import com.scupp.scupplite.dto.category.CategoryDTO;
 import com.scupp.scupplite.dto.user.UserDTO;
-import com.scupp.scupplite.dto.user.UserInsertDTO;
 import com.scupp.scupplite.dto.user.UserRegisterDTO;
 import com.scupp.scupplite.entities.Category;
 import com.scupp.scupplite.entities.User;
 import com.scupp.scupplite.repositories.CategoryRepository;
 import com.scupp.scupplite.repositories.UserRepository;
+import com.scupp.scupplite.services.exceptions.ResourceNotFoundException;
 import com.scupp.scupplite.util.UserCategoriesValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,6 +57,10 @@ public class UserService {
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity.getCategories().clear();
         for (CategoryDTO dtoCat : dto.getCategories()) {
+            Optional<Category> result = categoryRepository.findById(dtoCat.getId());
+            if(result.isEmpty()){
+                throw  new ResourceNotFoundException("Category not found");
+            }
             Category cat = categoryRepository.getOne(dtoCat.getId());
             entity.getCategories().add(cat);
         }
